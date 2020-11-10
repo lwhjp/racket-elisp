@@ -1,6 +1,6 @@
 #lang racket/base
 
-(require "eval.rkt")
+(require "kernel.rkt")
 
 (provide (all-defined-out))
 
@@ -8,13 +8,13 @@
   (defvar sym val))
 
 (define-syntax-rule (defvar sym val)
-  (hash-set! global-bindings 'sym val))
+  (hash-set! global-variables 'sym val))
 
 (define (wrap-bool f)
   (λ args (if (apply f args) 't 'nil)))
 
 (define-syntax-rule (defalias name def)
-  (hash-set! function-bindings 'name def))
+  (hash-set! global-functions 'name def))
 
 (define-syntax-rule (define-aliases [name def] ...)
   (begin (defalias name def) ...))
